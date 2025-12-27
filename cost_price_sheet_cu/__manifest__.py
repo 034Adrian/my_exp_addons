@@ -15,5 +15,6 @@
         "views/cost_component_views.xml",
         "report/cost_price_sheet_report.xml",
     ],
+    'installable': True,
     'aplication': True
 }

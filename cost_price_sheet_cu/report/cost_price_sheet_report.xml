@@ -1,0 +1,65 @@
+<!—costpricesheetcu/report/costpricesheetreport.xml >
+<odoo>
+  <template id=”reportcostprice_sheet”>
+    <t t-call=”web.external_layout”>
+      <div class=”page”>
+        <h2>Ficha Costo-Precio</h2>
+        <p><strong>Referencia:</strong> <t t-esc=”doc.name”/></p>
+        <p><strong>Producto:</strong> <t t-esc=”doc.productid.displayname”/></p>
+        <p><strong>Empresa:</strong> <t t-esc=”doc.company_id.name”/></p>
+        <p><strong>Moneda:</strong> <t t-esc=”doc.currency_id.name”/></p>
+        <p><strong>Tasa usada:</strong> <t t-esc=”doc.usesystemrate and ‘Sistema’ or ‘Ficha’”/></p>
+        <p t-if=”not doc.usesystemrate”><strong>Tipo de cambio:</strong> <t t-esc=”doc.exchange_rate”/></p>
+        <p><strong>Fecha efectiva:</strong> <t t-esc=”doc.effective_date”/></p>
+
+        <h3>Resumen de costos</h3>
+        <ul>
+          <li>Materiales: <t t-esc=”doc.material_cost”/></li>
+          <li>Mano de obra: <t t-esc=”doc.labor_cost”/></li>
+          <li>Gastos indirectos: <t t-esc=”doc.overhead_cost”/></li>
+          <li>Otros: <t t-esc=”doc.other_cost”/></li>
+          <li><strong>Total costo:</strong> <t t-esc=”doc.total_cost”/></li>
+        </ul>
+
+        <h3>Precio</h3>
+        <ul>
+          <li>Margen: <t t-esc=”doc.marginvalue”/> (<t t-esc=”doc.margintype”/>)</li>
+          <li>Impuestos: <t t-esc=”doc.total_tax”/></li>
+          <li>Subtotal: <t t-esc=”doc.price_subtotal”/></li>
+          <li><strong>Total:</strong> <t t-esc=”doc.price_total”/></li>
+          <li>Precio unitario: <t t-esc=”doc.unit_price”/></li>
+        </ul>
+
+        <h3>Componentes</h3>
+        <table class=”table table-sm”>
+          <thead>
+            <tr>
+              <th>Secuencia</th><th>Descripción</th><th>Categoría</th><th>Monto fuente</th><th>Monto convertido</th>
+            </tr>
+          </thead>
+          <tbody>
+            <t t-foreach=”doc.component_ids” t-as=”c”>
+              <tr>
+                <td><t t-esc=”c.sequence”/></td>
+                <td><t t-esc=”c.name”/></td>
+                <td><t t-esc=”c.category”/></td>
+                <td><t t-esc=”c.amount_source”/></td>
+                <td><t t-esc=”c.amount_converted”/></td>
+              </tr>
+            </t>
+          </tbody>
+        </table>
+
+        <p><strong>Notas:</strong> <t t-esc=”doc.notes”/></p>
+      </div>
+    </t>
+  </template>
+
+  <report
+    Id=”actionreportcostpricesheet”
+    Model=”cost.price.sheet”
+    String=”Ficha Costo-Precio”
+    Report_type=”qweb-pdf”
+    Name=”costpricesheetcu.reportcostpricesheet”
+    File=”costpricesheetcu.reportcostpricesheet”/>
+</odoo>

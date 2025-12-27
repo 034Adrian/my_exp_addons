@@ -1,0 +1,12 @@
+<!—costpricesheetcu/data/costpricesheetsequence.xml >
+<odoo>
+  <data noupdate=”1”>
+    <record id=”seqcostprice_sheet” model=”ir.sequence”>
+      <field name=”name”>Ficha Costo-Precio</field>
+      <field name=”code”>cost.price.sheet</field>
+      <field name=”prefix”>FCU-%(year)s-</field>
+      <field name=”padding”>4</field>
+      <field name=”company_id” eval=”False”/>
+    </record>
+  </data>
+</odoo>

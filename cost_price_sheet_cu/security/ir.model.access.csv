@@ -1,0 +1,5 @@
+Id,name,modelid:id,groupid:id,permread,permwrite,permcreate,permunlink
+Accesscostpricesheetuser,Usuario cost.price.sheet,modelcostpricesheet,groupcostpriceuser,1,1,1,0
+Accesscostpricesheetmanager,Gestor cost.price.sheet,modelcostpricesheet,groupcostpricemanager,1,1,1,1
+Accesscostpricecomponentuser,Usuario cost.price.component,modelcostpricecomponent,groupcostpriceuser,1,1,1,0
+Accesscostpricecomponentmanager,Gestor cost.price.component,modelcostpricecomponent,groupcostpricemanager,1,1,1,1

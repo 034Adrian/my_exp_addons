@@ -1,0 +1,14 @@
+<!—costpricesheetcu/security/costpricesheetsecurity.xml >
+<odoo>
+  <data noupdate=”1”>
+    <record id=”groupcostprice_user” model=”res.groups”>
+      <field name=”name”>Usuario Ficha Costo-Precio</field>
+      <field name=”categoryid” ref=”base.modulecategoryaccountingfinance”/>
+    </record>
+    <record id=”groupcostprice_manager” model=”res.groups”>
+      <field name=”name”>Gestor Ficha Costo-Precio</field>
+      <field name=”impliedids” eval=”[(4, ref(‘groupcostpriceuser’))]”/>
+      <field name=”categoryid” ref=”base.modulecategoryaccountingfinance”/>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,100 @@
+<!—costpricesheetcu/views/costpricesheetviews.xml >
+<odoo>
+  <record id=”viewcostpricesheettree” model=”ir.ui.view”>
+    <field name=”name”>cost.price.sheet.tree</field>
+    <field name=”model”>cost.price.sheet</field>
+    <field name=”arch” type=”xml”>
+      <tree>
+        <field name=”name”/>
+        <field name=”product_id”/>
+        <field name=”total_cost”/>
+        <field name=”price_total”/>
+        <field name=”currency_id”/>
+        <field name=”state”/>
+        <field name=”version”/>
+        <field name=”effective_date”/>
+      </tree>
+    </field>
+  </record>
+
+  <record id=”viewcostpricesheetform” model=”ir.ui.view”>
+    <field name=”name”>cost.price.sheet.form</field>
+    <field name=”model”>cost.price.sheet</field>
+    <field name=”arch” type=”xml”>
+      <form string=”Ficha Costo-Precio”>
+        <header>
+          <button name=”actionsubmitreview” type=”object” string=”Enviar a revisión” states=”draft”/>
+          <button name=”action_approve” type=”object” string=”Aprobar” states=”review”/>
+          <button name=”action_archive” type=”object” string=”Archivar” states=”approved”/>
+          <field name=”state” widget=”statusbar” statusbar_visible=”draft,review,approved,archived”/>
+        </header>
+        <sheet>
+          <group>
+            <group>
+              <field name=”name”/>
+              <field name=”productid” options=”{‘nocreate’: False}”/>
+              <field name=”company_id”/>
+              <field name=”currency_id”/>
+              <field name=”sourcecurrencyid”/>
+              <field name=”exchangerate” attrs=”{‘invisible’: [(‘usesystem_rate’,’=’,True)]}”/>
+              <field name=”usesystemrate”/>
+              <field name=”version”/>
+              <field name=”effective_date”/>
+            </group>
+            <group>
+              <field name=”margin_type”/>
+              <field name=”margin_value”/>
+              <field name=”taxids” widget=”many2manytags”/>
+              <field name=”quantity”/>
+            </group>
+          </group>
+
+          <notebook>
+            <page string=”Componentes”>
+              <field name=”componentids” context=”{‘defaultsheetid’: activeid}”>
+                <tree editable=”bottom”>
+                  <field name=”sequence”/>
+                  <field name=”name”/>
+                  <field name=”category”/>
+                  <field name=”amount_source”/>
+                  <field name=”amount_converted” readonly=”1”/>
+                  <field name=”partner_id”/>
+                  <field name=”account_id”/>
+                  <field name=”purchaseorderline_id”/>
+                  <field name=”stockmoveid”/>
+                </tree>
+              </field>
+            </page>
+            <page string=”Totales”>
+              <group>
+                <field name=”material_cost” readonly=”1”/>
+                <field name=”labor_cost” readonly=”1”/>
+                <field name=”overhead_cost” readonly=”1”/>
+                <field name=”other_cost” readonly=”1”/>
+                <field name=”total_cost” readonly=”1”/>
+              </group>
+              <group>
+                <field name=”price_subtotal” readonly=”1”/>
+                <field name=”total_tax” readonly=”1”/>
+                <field name=”price_total” readonly=”1”/>
+                <field name=”unit_price” readonly=”1”/>
+              </group>
+            </page>
+            <page string=”Notas”>
+              <field name=”notes”/>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record id=”actioncostpricesheet” model=”ir.actions.actwindow”>
+    <field name=”name”>Fichas Costo-Precio</field>
+    <field name=”res_model”>cost.price.sheet</field>
+    <field name=”view_mode”>tree,form</field>
+  </record>
+
+  <menuitem id=”menucostpriceroot” name=”Costo-Precio” parent=”account.menufinance”/>
+  <menuitem id=”menucostpricesheet” name=”Fichas” parent=”menucostpriceroot” action=”actioncostprice_sheet”/>
+</odoo>
